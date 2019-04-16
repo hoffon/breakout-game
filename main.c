@@ -178,7 +178,7 @@ int main(int argc, char *args[])
             ball.vel_y = -ball.vel_y;
         }
 
-        cpDelay(10);
+        cpDelay(12);// ความเร็วตอนเล่น
     }
     cpCleanUp();
     return 0;
