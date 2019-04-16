@@ -6,8 +6,8 @@
 #define True  1
 #define False 0
 #define WindowTitle  "Breakout 61"
-#define WindowWidth  800
-#define WindowHeight 700
+#define WindowWidth  925 //ขนาดหน้าจอ กว้าง
+#define WindowHeight 650 //ขนาดหน้าจอ สูง
 
 Sound hit_paddle_sound, hit_brick_sound;
 Sound hit_top_sound, end_sound;
@@ -62,7 +62,7 @@ int game_init()
 int main(int argc, char *args[])
 {
     enum { BALL_VEL_Y = -5, PADDLE_VEL_X = 7 };
-    int running, n_bricks = 15, n_hits = 0, score = 0;
+    int running, n_bricks = 112, n_hits = 0, score = 0;
     char msg[80];
     Object bricks[n_bricks];
     Object ball = {WindowWidth/2-12, 350, 24, 24, 0, BALL_VEL_Y, False};
@@ -79,14 +79,22 @@ int main(int argc, char *args[])
         exit(1);
     }
 
-    for (int n = 0, x = -10, y = 80; n < n_bricks; n++) {
-        bricks[n].width = 55;
-        bricks[n].height = 18;
-        bricks[n].x = x;
-        bricks[n].y = y;
-        bricks[n].destroyed = False;
-        x += bricks[n].width;
+    for (int n = 0, x = 50, y = 80 , num = 0 ; n < n_bricks; n++) { // สร้างแผ่นไม้
+        bricks[n].width = 50; // ความยาวแผ่นไม้
+        bricks[n].height = 18; // ความสูงแผ่นไม้
+        bricks[n].x = x; // ตำแหน่งที่สร้างไม้ แกน x แนวนอน
+        bricks[n].y = y; // ตำแหน่งที่สร้างไม้ แกน y แนวตั้ง
+        bricks[n].destroyed = False; 
+        x += bricks[n].width+10; // ตำแหน่งที่สร้างไม้ แกน x แนวนอน จะบวกต่อจากขนาดของแผ่นไม้ที่สร้างแล้ว
+        num++ ; 
+        if (num == 14) // สร้างไม้บรรทัดใหม่
+        {
+            x = 50 ;
+            y += 20 ;
+            num = 0 ;
+        }
     }
+
 
     running = True;
     while (running) {
@@ -130,10 +138,10 @@ int main(int argc, char *args[])
             }
 
             if (event.type == KEYDOWN) {
-                if (event.key.keysym.sym == K_LEFT)
-                    paddle.vel_x = -abs(PADDLE_VEL_X);
-                if (event.key.keysym.sym == K_RIGHT)
-                    paddle.vel_x = abs(PADDLE_VEL_X);
+                if (event.key.keysym.sym == K_LEFT)  //รับแป้นซ้ายจากkeyboard
+                    paddle.vel_x = -abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางซ้าย (ติดลบ)
+                if (event.key.keysym.sym == K_RIGHT) //รับแป้นขวาจากkeyboard
+                    paddle.vel_x = abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางขวา 
             }
             else
             if (event.type == KEYUP) {
@@ -143,22 +151,22 @@ int main(int argc, char *args[])
                     paddle.vel_x = 0;
             }
         }
-        paddle.x += paddle.vel_x;
+        paddle.x += paddle.vel_x; //ต่ำแหน่งของไม้ที่จะเคลื่อนที่ 
 
-        if (paddle.x < 0)
+        if (paddle.x < 0) // ไม้จะติดขอบด้านซ้าย 
             paddle.x = 0;
-        if (paddle.x + paddle.width > WindowWidth)
+        if (paddle.x + paddle.width > WindowWidth) // ไม้จะติดขอบด้านขวา
             paddle.x = WindowWidth - paddle.width;
 
-        ball.x += ball.vel_x;
-        ball.y += ball.vel_y;
+        ball.x += ball.vel_x;//ต่ำแหน่งของบอลที่จะเคลื่อนที่ แกน x แนวนอน  
+        ball.y += ball.vel_y;//ต่ำแหน่งของบอลที่จะเคลื่อนที่ แกน y แนวตั้ง
 
-        if (ball.x < 0 || ball.x + ball.width > WindowWidth)
+        if (ball.x < 0 || ball.x + ball.width > WindowWidth) // เมื่อบอลกระทบกับหน้าต่างเกมซ้ายและขวาจะเด้งกลับไม่เลยจอออกไป
             ball.vel_x = -ball.vel_x;
 
-        if (ball.y < 0) {
+        if (ball.y < 0) { //ถ้าบอลกระทบจุดสูงสุดของหน้าต่างเกม
             cpPlaySound(hit_top_sound);
-            ball.vel_y = -ball.vel_y;
+            ball.vel_y = -ball.vel_y; //บอลเด้งกลับลงมา ไม่งั้นจะค้างข้างบน
         }
 
         for (int n = 0; n < n_bricks; n++) {
@@ -166,16 +174,24 @@ int main(int argc, char *args[])
                 collide(ball, bricks[n]) == True) {
                 cpPlaySound(hit_brick_sound);
                 ball.vel_y = -ball.vel_y;
-                bricks[n].destroyed = True;
-                n_hits++;
-                score += 10;
+                bricks[n].destroyed = True; //ทำลายอิฐ
+                n_hits++; //จำนวนทีอิฐ่ทำลาย
+                score += 10; //คะแนนเพิ่ม
                 break;
             }
         }
 
-        if (collide(ball, paddle) == True) {
+        if (collide(ball, paddle) == True) 
+        {
             cpPlaySound(hit_paddle_sound);
-            ball.vel_y = -ball.vel_y;
+            if (ball.x >= paddle.x + paddle.width / 2 && 
+                ball.x < paddle.x + paddle.width && 
+                ball.y + ball.height >= paddle.y)
+            {
+                ball.vel_y = -ball.vel_y;
+                ball.vel_x = -ball.vel_y;//บอลเฉียงออกไปทางขวา
+            }
+
         }
 
         cpDelay(12);// ความเร็วตอนเล่น
