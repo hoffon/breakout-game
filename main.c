@@ -6,7 +6,7 @@
 #define True  1
 #define False 0
 #define WindowTitle  "Breakout 61"
-#define WindowWidth  925 //ขนาดหน้าจอ กว้าง
+#define WindowWidth  910 //ขนาดหน้าจอ กว้าง
 #define WindowHeight 650 //ขนาดหน้าจอ สูง
 
 Sound hit_paddle_sound, hit_brick_sound;
@@ -62,7 +62,7 @@ int game_init()
 int main(int argc, char *args[])
 {
     enum { BALL_VEL_Y = -5, PADDLE_VEL_X = 7 };
-    int running, n_bricks = 112, n_hits = 0, score = 0;
+    int running, n_bricks = 120, n_hits = 0, score = 0;
     char msg[80];
     Object bricks[n_bricks];
     Object ball = {WindowWidth/2-12, 350, 24, 24, 0, BALL_VEL_Y, False};
@@ -79,7 +79,7 @@ int main(int argc, char *args[])
         exit(1);
     }
 
-    for (int n = 0, x = 50, y = 80 , num = 0 ; n < n_bricks; n++) { // สร้างแผ่นไม้
+    for (int n = 0, x = 10, y = 80 , num = 0 ; n < n_bricks; n++) { // สร้างแผ่นไม้
         bricks[n].width = 50; // ความยาวแผ่นไม้
         bricks[n].height = 18; // ความสูงแผ่นไม้
         bricks[n].x = x; // ตำแหน่งที่สร้างไม้ แกน x แนวนอน
@@ -87,9 +87,9 @@ int main(int argc, char *args[])
         bricks[n].destroyed = False; 
         x += bricks[n].width+10; // ตำแหน่งที่สร้างไม้ แกน x แนวนอน จะบวกต่อจากขนาดของแผ่นไม้ที่สร้างแล้ว
         num++ ; 
-        if (num == 14) // สร้างไม้บรรทัดใหม่
+        if (num == 15) // สร้างไม้บรรทัดใหม่
         {
-            x = 50 ;
+            x = 10 ;
             y += 20 ;
             num = 0 ;
         }
