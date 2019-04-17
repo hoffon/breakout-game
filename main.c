@@ -13,7 +13,7 @@ Sound hit_paddle_sound, hit_brick_sound;
 Sound hit_top_sound, end_sound;
 Texture paddle_texture, ball_texture;
 Texture brick_texture, background_texture;
-Font big_font, small_font, life_font ,position_font;
+Font big_font, small_font, life_font ,position_ball_font,position_paddle_font;
 
 // Structure for storing info for objects, i.e. Paddle, Brick, Ball.
 typedef struct
@@ -50,7 +50,8 @@ int game_init()
     big_font = cpLoadFont("THSarabun.ttf", 60);
     small_font = cpLoadFont("THSarabun.ttf", 30);
     life_font = cpLoadFont("THSarabun.ttf",30);
-    position_font = cpLoadFont("THSarabun.ttf", 20);
+    position_ball_font = cpLoadFont("THSarabun.ttf", 20);
+    position_paddle_font = cpLoadFont("THSarabun.ttf", 20);
 
     if (hit_paddle_sound == NULL || hit_brick_sound == NULL ||
         hit_top_sound == NULL || end_sound == NULL ||
@@ -67,7 +68,8 @@ int main(int argc, char *args[])
     int running, n_bricks = 120, n_hits = 0, score = 0 , lifepoint = 3;
     char msg[80];
     char life[100] ;
-    char position[50] ;
+    char position_ball[50] ;
+    char position_paddle[50] ;
     Object bricks[n_bricks];
     Object ball = {WindowWidth/2-12, 350, 24, 24, 0, BALL_VEL_Y, False};
     Object paddle = {WindowWidth/2-62, WindowHeight-50, 124, 18, 0, 0, False};
@@ -113,8 +115,10 @@ int main(int argc, char *args[])
         cpDrawText(255, 255, 255, 3, 3, msg, small_font, 0);
         sprintf(life, "ชีวิตที่เหลือ : %d",lifepoint); // แสดงคำว่า ชีวิตที่เหลือ : 3 บนหน้าต่างเกมของเรา
         cpDrawText(255, 255, 255, 3, 40, life,life_font, 0);
-        sprintf(position, "Position x = %.3f, y = %.3f", ball.x, ball.y);
-        cpDrawText(255, 255, 255, 800, 20, position, position_font, 1); // แสดงตำแหน่งของลูกบอล
+        sprintf(position_ball, "Position_ball x = %.3f, y = %.3f", ball.x, ball.y);
+        cpDrawText(255, 255, 255, 750, 20, position_ball, position_ball_font, 1); // แสดงตำแหน่งของลูกบอล
+        sprintf(position_paddle, "Position_paddle x = %.3f, y = %.3f", paddle.x, paddle.y);
+        cpDrawText(255, 255, 255, 750, 40, position_paddle, position_paddle_font, 1); // แสดงตำแหน่งของไม้
 
         for (int n = 0; n < n_bricks; n++) {
             if (!bricks[n].destroyed)
@@ -203,12 +207,20 @@ int main(int argc, char *args[])
         if (collide(ball, paddle) == True) 
         {
             cpPlaySound(hit_paddle_sound);
-            if (ball.x >= paddle.x + paddle.width / 2 && 
+            if (ball.y >= paddle.y)
+                ball.vel_y = ball.vel_y ; //  เมื่อ ball.y อยู่ตำแหน่งเดียวกับ  paddle.y บอลจะไม่ค้างอยู่ที่ไม้ 
+            else if (ball.x >= paddle.x + paddle.width / 2 && 
                 ball.x < paddle.x + paddle.width && 
                 ball.y + ball.height >= paddle.y)
             {
                 ball.vel_y = -ball.vel_y;
-                ball.vel_x = -ball.vel_y;//บอลเฉียงออกไปทางขวา
+                ball.vel_x = -ball.vel_y;//บอลโดนไม้ด้านขวา บอลจะเฉียงออกไปทางขวา
+            }
+            else if ( ball.x == paddle.x + 50  )
+                ball.vel_y = -ball.vel_y ; // บอลโดนไม้ตรงกลาง บอลจะเด้งขึ้น
+            else {
+                ball.vel_y = -ball.vel_y ;
+                ball.vel_x = ball.vel_y ; // บอลโดนไม้ด้านซ้าย บอลจะเฉียงออกไปทางซ้าย
             }
 
         }
