@@ -13,7 +13,7 @@ Sound hit_paddle_sound, hit_brick_sound;
 Sound hit_top_sound, end_sound , win_sound ;
 //Music background_sound ;
 Texture paddle_texture, ball_texture;
-Texture brick_texture, background_texture;
+Texture brick_texture, background_texture , brick2_texture;
 Font big_font, small_font, life_font ,position_ball_font,position_paddle_font,win_font;
 
 // Structure for storing info for objects, i.e. Paddle, Brick, Ball.
@@ -48,6 +48,7 @@ int game_init()
     paddle_texture = cpLoadTexture("paddle.png");
     ball_texture = cpLoadTexture("ball2.png");
     brick_texture = cpLoadTexture("brick.png");
+    brick2_texture = cpLoadTexture("brick2.jpg"); // ลักษณะอิฐ ที่ต้องทำลาย 4 ครั้ง
     background_texture = cpLoadTexture("backgrounded.png");
 
     big_font = cpLoadFont("THSarabun.ttf", 60);
@@ -62,7 +63,7 @@ int game_init()
         paddle_texture == NULL || ball_texture == NULL ||
         brick_texture == NULL || background_texture == NULL ||
         big_font == NULL || small_font == NULL || /*background_sound == NULL*/ 
-        win_font == NULL || win_sound == NULL)
+        win_font == NULL || win_sound == NULL )
         return False;
     return True;
 }
@@ -70,7 +71,7 @@ int game_init()
 int main(int argc, char *args[])
 {
     enum { BALL_VEL_Y = -5, PADDLE_VEL_X = 7 };
-    int running, n_bricks = 1, n_hits = 0, score = 0 , lifepoint = 3;
+    int running, n_bricks = 64, n_hits = 0, score = 0 , lifepoint = 3, n_hits27 = 0,n_hits28 = 0,n_hits35 = 0,n_hits36 = 0;
     char msg[80];
     char life[100] ;
     char position_ball[50] ;
@@ -128,9 +129,15 @@ int main(int argc, char *args[])
         
         for (int n = 0; n < n_bricks; n++) {
             if (!bricks[n].destroyed)
-                cpDrawTexture(255, 255, 255,
+            {
+                if (n == 27 || n == 28 || n == 35 || n == 36) // สร้างลักษณะอิฐใหม่ให้มีการชน 4 ครั้งถึงจะถูกทำลาย 
+                    cpDrawTexture(255, 255, 255,
+                    bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
+                    brick2_texture);
+                else cpDrawTexture(255, 255, 255,
                     bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
                     brick_texture);
+            }
         }
         
         if (ball.y + ball.width > WindowHeight) // ส่วนของชีวิตที่ยังคงสามารถเล่นได้ เมื่อบอลตก 
@@ -215,7 +222,65 @@ int main(int argc, char *args[])
         }
 
         for (int n = 0; n < n_bricks; n++) {
+            if (n == 27 ){ // อิฐก้อนที่ 27 ต้อง ทำลาย 4 ครั้ง ถึงจะได้แต้ม 40 
             if (!bricks[n].destroyed &&
+                collide(ball, bricks[n]) == True) {
+                cpPlaySound(hit_brick_sound);
+                ball.vel_y = -ball.vel_y;
+                n_hits27++ ;
+                if (n_hits27 == 4){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 40; //คะแนนเพิ่ม
+                }
+                break;
+            }
+            }
+            else if (n == 28 ){ // อิฐก้อนที่ 28 ต้อง ทำลาย 4 ครั้ง ถึงจะได้แต้ม 40 
+            if (!bricks[n].destroyed &&
+                collide(ball, bricks[n]) == True) {
+                cpPlaySound(hit_brick_sound);
+                ball.vel_y = -ball.vel_y;
+                n_hits28++ ;
+                if (n_hits28 == 4){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 40; //คะแนนเพิ่ม
+                }
+                break;
+            }
+            }
+            else if (n == 35 ){ // อิฐก้อนที่ 35 ต้อง ทำลาย 4 ครั้ง ถึงจะได้แต้ม 40 
+            if (!bricks[n].destroyed &&
+                collide(ball, bricks[n]) == True) {
+                cpPlaySound(hit_brick_sound);
+                ball.vel_y = -ball.vel_y;
+                n_hits35++ ;
+                if (n_hits35 == 4){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 40; //คะแนนเพิ่ม
+                }
+                break;
+            }
+            }
+            else if (n == 36 ){ // อิฐก้อนที่ 36 ต้อง ทำลาย 4 ครั้ง ถึงจะได้แต้ม 40 
+            if (!bricks[n].destroyed &&
+                collide(ball, bricks[n]) == True) {
+                cpPlaySound(hit_brick_sound);
+                ball.vel_y = -ball.vel_y;
+                n_hits36++ ;
+                if (n_hits36 == 4){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 40; //คะแนนเพิ่ม
+                }
+                break;
+            }
+            }
+
+
+            else if(!bricks[n].destroyed &&
                 collide(ball, bricks[n]) == True) {
                 cpPlaySound(hit_brick_sound);
                 ball.vel_y = -ball.vel_y;
