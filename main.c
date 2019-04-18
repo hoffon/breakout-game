@@ -264,6 +264,7 @@ int main(int argc, char *args[])
                 collide(bomb, bricks[n]) == True && !bomb.destroyed){
                     bricks[n].destroyed = True; //ทำลายอิฐ
                     bomb.destroyed = True ;// ทำลายระเบิด
+                    cpPlaySound(end_sound);
                     bomb.y = -1000 ;
                     life_bomb-- ;
                     if (n == 27 || n == 28 || n == 35 || n == 36)
