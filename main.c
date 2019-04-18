@@ -13,7 +13,7 @@ Sound hit_paddle_sound, hit_brick_sound , metal_sound ,allu_sound;
 Sound hit_top_sound, end_sound , win_sound ,red_sound ;
 Music background_sound ;
 Texture paddle_texture, ball_texture;
-Texture brick_texture, background_texture , brick2_texture, allu_texture ,brick3_texture;
+Texture brick_texture, background_texture , brick2_texture, allu_texture ,brick3_texture,bomb_texture;
 Font big_font, small_font, life_font ,position_ball_font,position_paddle_font,win_font;
 
 // Structure for storing info for objects, i.e. Paddle, Brick, Ball.
@@ -55,6 +55,7 @@ int game_init()
     allu_texture = cpLoadTexture("alluminium.jpg") ; // ลักษณะอิฐ ที่ต้อวทำลาย 3 ครั้ง
     background_texture = cpLoadTexture("backgrounded.png");
     brick3_texture = cpLoadTexture("brick3.jpg");
+    bomb_texture = cpLoadTexture("bomb.jpg") ;
 
     big_font = cpLoadFont("THSarabun.ttf", 60);
     small_font = cpLoadFont("THSarabun.ttf", 30);
@@ -68,7 +69,8 @@ int game_init()
         paddle_texture == NULL || ball_texture == NULL ||
         brick_texture == NULL || background_texture == NULL ||
         big_font == NULL || small_font == NULL || /*background_sound == NULL*/ 
-        win_font == NULL || win_sound == NULL || metal_sound == NULL || allu_sound == NULL || brick3_texture ==NULL)
+        win_font == NULL || win_sound == NULL || metal_sound == NULL || allu_sound == NULL || 
+        brick3_texture ==NULL)
         return False;
     return True;
 }
@@ -86,6 +88,7 @@ int main(int argc, char *args[])
     char win[50] ;
     Object bricks[n_bricks];
     Object ball = {WindowWidth/2-12, 350, 24, 24, 0, BALL_VEL_Y, False};
+    Object bomb = {WindowWidth/2-12, WindowHeight-80, 20, 30, 0, BALL_VEL_Y, False}; //ระเบิด
     Object paddle = {WindowWidth/2-62, WindowHeight-50, 124, 18, 0, 0, False};
     Event event;
 
@@ -125,6 +128,8 @@ int main(int argc, char *args[])
             paddle.x, paddle.y, paddle.width, paddle.height, paddle_texture);
         cpDrawTexture(255, 255, 255,
             ball.x, ball.y, ball.width, ball.height, ball_texture);
+        cpDrawTexture(255, 255, 255,
+            bomb.x, bomb.y, bomb.width, bomb.height, bomb_texture);
         sprintf(msg, "คะแนน %d", score);
         cpDrawText(255, 255, 255, 3, 3, msg, small_font, 0);
         sprintf(life, "ชีวิตที่เหลือ : %d",lifepoint); // แสดงคำว่า ชีวิตที่เหลือ : 3 บนหน้าต่างเกมของเรา
@@ -209,8 +214,8 @@ int main(int argc, char *args[])
                     paddle.vel_x = -abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางซ้าย (ติดลบ)
                 if (event.key.keysym.sym == K_RIGHT) //รับแป้นขวาจากkeyboard
                     paddle.vel_x = abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางขวา 
-                if (event.key.keysym.sym == K_DOWN)
-                    cpPlayMusic(background_sound);
+                if (event.key.keysym.sym == K_DOWN) // รับแป้นลงจาก keyboard
+                    cpPlayMusic(background_sound); // เปิดเพลงขณะเล่น
             }
             else
             if (event.type == KEYUP) {
