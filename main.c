@@ -88,7 +88,7 @@ int main(int argc, char *args[])
     char win[50] ;
     Object bricks[n_bricks];
     Object ball = {WindowWidth/2-12, 350, 24, 24, 0, BALL_VEL_Y, False};
-    Object bomb = {WindowWidth/2-12, WindowHeight-80, 20, 30, 0, BALL_VEL_Y, False}; //ระเบิด
+    Object bomb = {WindowWidth/2-12, WindowHeight-80, 20, 30, 0, 0, False}; //ระเบิด
     Object paddle = {WindowWidth/2-62, WindowHeight-50, 124, 18, 0, 0, False};
     Event event;
 
@@ -210,10 +210,14 @@ int main(int argc, char *args[])
             }
 
             if (event.type == KEYDOWN) {
-                if (event.key.keysym.sym == K_LEFT)  //รับแป้นซ้ายจากkeyboard
+                if (event.key.keysym.sym == K_LEFT){ //รับแป้นซ้ายจากkeyboard
                     paddle.vel_x = -abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางซ้าย (ติดลบ)
-                if (event.key.keysym.sym == K_RIGHT) //รับแป้นขวาจากkeyboard
-                    paddle.vel_x = abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางขวา 
+                    bomb.vel_x = -abs(PADDLE_VEL_X);
+                }
+                if (event.key.keysym.sym == K_RIGHT){ //รับแป้นขวาจากkeyboard
+                    paddle.vel_x = abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางขวา
+                    bomb.vel_x = abs(PADDLE_VEL_X);
+                } 
                 if (event.key.keysym.sym == K_DOWN) // รับแป้นลงจาก keyboard
                     cpPlayMusic(background_sound); // เปิดเพลงขณะเล่น
             }
@@ -227,6 +231,7 @@ int main(int argc, char *args[])
         }
 
         paddle.x += paddle.vel_x; //ต่ำแหน่งของไม้ที่จะเคลื่อนที่ 
+        bomb.x += paddle.vel_x ; 
 
         if (paddle.x < 0) // ไม้จะติดขอบด้านซ้าย 
             paddle.x = 0;
