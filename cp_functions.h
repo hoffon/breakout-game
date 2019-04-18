@@ -18,6 +18,7 @@
 #define K_LEFT    SDLK_LEFT
 #define K_RIGHT   SDLK_RIGHT
 #define K_DOWN    SDLK_DOWN
+#define K_UP      SDLK_UP
 
 
 typedef TTF_Font  *Font;

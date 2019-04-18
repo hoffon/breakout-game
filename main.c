@@ -80,7 +80,7 @@ int main(int argc, char *args[])
     enum { BALL_VEL_Y = -5, PADDLE_VEL_X = 7 };
     int running, n_bricks = 64, n_hits = 0, score = 0 , lifepoint = 3, n_hits27 = 0,n_hits28 = 0 ;
     int n_hits35 = 0,n_hits36 = 0 , n_hits18 = 0 , n_hits21 = 0 , n_hits42 = 0 , n_hits45 = 0;
-    int n_hits9 = 0,n_hits14 = 0,n_hits49 = 0,n_hits54 = 0;
+    int n_hits9 = 0,n_hits14 = 0,n_hits49 = 0,n_hits54 = 0 ,b = 0;
     char msg[80];
     char life[100] ;
     char position_ball[50] ;
@@ -222,6 +222,10 @@ int main(int argc, char *args[])
                 } 
                 if (event.key.keysym.sym == K_DOWN) // รับแป้นลงจาก keyboard
                     cpPlayMusic(background_sound); // เปิดเพลงขณะเล่น
+                if (event.key.keysym.sym == K_UP){
+                    b++;
+                    bomb.vel_y = BALL_VEL_Y ;
+                }
             }
             else
             if (event.type == KEYUP) {
@@ -233,7 +237,10 @@ int main(int argc, char *args[])
         }
 
         paddle.x += paddle.vel_x; //ต่ำแหน่งของไม้ที่จะเคลื่อนที่ 
+        bomb.y += bomb.vel_y ;
+        if (b == 0)
         bomb.x += paddle.vel_x ;  //ต่ำแหน่งของระเบิดที่จะเคลื่อนที่ 
+        
 
         if (paddle.x < 0) // ไม้จะติดขอบด้านซ้าย 
             paddle.x = 0;
