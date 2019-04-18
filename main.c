@@ -80,7 +80,7 @@ int main(int argc, char *args[])
     enum { BALL_VEL_Y = -5, PADDLE_VEL_X = 7 };
     int running, n_bricks = 64, n_hits = 0, score = 0 , lifepoint = 3, n_hits27 = 0,n_hits28 = 0 ;
     int n_hits35 = 0,n_hits36 = 0 , n_hits18 = 0 , n_hits21 = 0 , n_hits42 = 0 , n_hits45 = 0;
-    int n_hits9 = 0,n_hits14 = 0,n_hits49 = 0,n_hits54 = 0 ,b = 0;
+    int n_hits9 = 0,n_hits14 = 0,n_hits49 = 0,n_hits54 = 0 ,b = 0,life_bomb = 1;
     char msg[80];
     char life[100] ;
     char position_ball[50] ;
@@ -169,8 +169,9 @@ int main(int argc, char *args[])
             ball.vel_y = 5 ; // บอลเคลื่อนที่ตามแกน y (เคลื่อนที่ลง) เป็น 0
             paddle.x = WindowWidth/2-62 ; // ไม้กลับมายังจุดเริ่มต้น
             paddle.y = WindowHeight-50 ; // ไม้กลับมายังจุดเริ่มต้น
+            if (life_bomb == 1){
             bomb.x = WindowWidth/2-12 ; // ระเบิดกลับมายังจุดเริ่มต้น
-            bomb.y = WindowHeight-80 ; //  ระเบิดกลับมายังจุดเริ่มต้น
+            bomb.y = WindowHeight-80 ;} //  ระเบิดกลับมายังจุดเริ่มต้น
             
         }
         if (n_hits == n_bricks) // เมื่อลเล่นเกมแล้วพังแผ่นไม้ได้หมด จะแสดงคำว่า ยินดีด้วยคุณชนะ
@@ -259,6 +260,15 @@ int main(int argc, char *args[])
         }
 
         for (int n = 0; n < n_bricks; n++) {
+            if (!bricks[n].destroyed &&
+                collide(bomb, bricks[n]) == True && !bomb.destroyed){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    bomb.destroyed = True ;// ทำลายระเบิด
+                    bomb.y = -1000 ;
+                    life_bomb-- ;
+                }
+
+
             if (n == 27 ){ // อิฐก้อนที่ 27 ต้อง ทำลาย 4 ครั้ง ถึงจะได้แต้ม 40 
             if (!bricks[n].destroyed &&
                 collide(ball, bricks[n]) == True) {
