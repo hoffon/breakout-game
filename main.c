@@ -9,7 +9,7 @@
 #define WindowWidth  910 //ขนาดหน้าจอ กว้าง
 #define WindowHeight 650 //ขนาดหน้าจอ สูง
 
-Sound hit_paddle_sound, hit_brick_sound , metal_sound;
+Sound hit_paddle_sound, hit_brick_sound , metal_sound ,allu_sound;
 Sound hit_top_sound, end_sound , win_sound ;
 //Music background_sound ;
 Texture paddle_texture, ball_texture;
@@ -44,6 +44,7 @@ int game_init()
     end_sound = cpLoadSound("theEnd.wav");
     win_sound = cpLoadSound("win.wav") ;
     metal_sound = cpLoadSound("metal_sound.wav") ;
+    allu_sound = cpLoadSound("allu_sound.wav") ;
     //background_sound = cpLoadMusic("background_sound.mp3");
 
     paddle_texture = cpLoadTexture("paddle.png");
@@ -65,7 +66,7 @@ int game_init()
         paddle_texture == NULL || ball_texture == NULL ||
         brick_texture == NULL || background_texture == NULL ||
         big_font == NULL || small_font == NULL || /*background_sound == NULL*/ 
-        win_font == NULL || win_sound == NULL || metal_sound == NULL)
+        win_font == NULL || win_sound == NULL || metal_sound == NULL || allu_sound == NULL)
         return False;
     return True;
 }
@@ -288,7 +289,7 @@ int main(int argc, char *args[])
             else if (n == 18 ){ // อิฐก้อนที่ 18 ต้อง ทำลาย 3 ครั้ง ถึงจะได้แต้ม 30 
             if (!bricks[n].destroyed &&
                 collide(ball, bricks[n]) == True) {
-                cpPlaySound(metal_sound);
+                cpPlaySound(allu_sound);
                 ball.vel_y = -ball.vel_y;
                 n_hits18++ ;
                 if (n_hits18 == 3){
@@ -302,7 +303,7 @@ int main(int argc, char *args[])
             else if (n == 21 ){ // อิฐก้อนที่ 21 ต้อง ทำลาย 3 ครั้ง ถึงจะได้แต้ม 30 
             if (!bricks[n].destroyed &&
                 collide(ball, bricks[n]) == True) {
-                cpPlaySound(metal_sound);
+                cpPlaySound(allu_sound);
                 ball.vel_y = -ball.vel_y;
                 n_hits21++ ;
                 if (n_hits21 == 3){
@@ -316,7 +317,7 @@ int main(int argc, char *args[])
             else if (n == 42 ){ // อิฐก้อนที่ 42 ต้อง ทำลาย 3 ครั้ง ถึงจะได้แต้ม 30 
             if (!bricks[n].destroyed &&
                 collide(ball, bricks[n]) == True) {
-                cpPlaySound(metal_sound);
+                cpPlaySound(allu_sound);
                 ball.vel_y = -ball.vel_y;
                 n_hits42++ ;
                 if (n_hits42 == 3){
@@ -330,7 +331,7 @@ int main(int argc, char *args[])
             else if (n == 45 ){ // อิฐก้อนที่ 45 ต้อง ทำลาย 3 ครั้ง ถึงจะได้แต้ม 30 
             if (!bricks[n].destroyed &&
                 collide(ball, bricks[n]) == True) {
-                cpPlaySound(metal_sound);
+                cpPlaySound(allu_sound);
                 ball.vel_y = -ball.vel_y;
                 n_hits45++ ;
                 if (n_hits45 == 3){
