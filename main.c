@@ -169,6 +169,8 @@ int main(int argc, char *args[])
             ball.vel_y = 5 ; // บอลเคลื่อนที่ตามแกน y (เคลื่อนที่ลง) เป็น 0
             paddle.x = WindowWidth/2-62 ; // ไม้กลับมายังจุดเริ่มต้น
             paddle.y = WindowHeight-50 ; // ไม้กลับมายังจุดเริ่มต้น
+            bomb.x = WindowWidth/2-12 ; // ระเบิดกลับมายังจุดเริ่มต้น
+            bomb.y = WindowHeight-80 ; //  ระเบิดกลับมายังจุดเริ่มต้น
             
         }
         if (n_hits == n_bricks) // เมื่อลเล่นเกมแล้วพังแผ่นไม้ได้หมด จะแสดงคำว่า ยินดีด้วยคุณชนะ
@@ -231,7 +233,7 @@ int main(int argc, char *args[])
         }
 
         paddle.x += paddle.vel_x; //ต่ำแหน่งของไม้ที่จะเคลื่อนที่ 
-        bomb.x += paddle.vel_x ; 
+        bomb.x += paddle.vel_x ;  //ต่ำแหน่งของระเบิดที่จะเคลื่อนที่ 
 
         if (paddle.x < 0) // ไม้จะติดขอบด้านซ้าย 
             paddle.x = 0;
