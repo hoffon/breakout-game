@@ -17,6 +17,8 @@
 #define K_ESCAPE  SDLK_ESCAPE
 #define K_LEFT    SDLK_LEFT
 #define K_RIGHT   SDLK_RIGHT
+#define K_DOWN    SDLK_DOWN
+
 
 typedef TTF_Font  *Font;
 typedef Mix_Music *Music;

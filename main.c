@@ -11,7 +11,7 @@
 
 Sound hit_paddle_sound, hit_brick_sound , metal_sound ,allu_sound;
 Sound hit_top_sound, end_sound , win_sound ,red_sound ;
-//Music background_sound ;
+Music background_sound ;
 Texture paddle_texture, ball_texture;
 Texture brick_texture, background_texture , brick2_texture, allu_texture ,brick3_texture;
 Font big_font, small_font, life_font ,position_ball_font,position_paddle_font,win_font;
@@ -46,7 +46,7 @@ int game_init()
     metal_sound = cpLoadSound("metal_sound.wav") ;
     allu_sound = cpLoadSound("allu_sound.wav") ;
     red_sound = cpLoadSound("red.wav");
-    //background_sound = cpLoadMusic("background_sound.mp3");
+    background_sound = cpLoadMusic("background_sound.mp3");
 
     paddle_texture = cpLoadTexture("paddle.png");
     ball_texture = cpLoadTexture("ball2.png");
@@ -182,6 +182,7 @@ int main(int argc, char *args[])
             //break ;
             //running = False ;
         }
+        
         if (lifepoint < 0 ) {
             cpPlaySound(end_sound);
             cpDrawText(255, 255, 0, 450, 350, "จบเกมจบกัน", big_font, 1);
@@ -208,6 +209,8 @@ int main(int argc, char *args[])
                     paddle.vel_x = -abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางซ้าย (ติดลบ)
                 if (event.key.keysym.sym == K_RIGHT) //รับแป้นขวาจากkeyboard
                     paddle.vel_x = abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางขวา 
+                if (event.key.keysym.sym == K_DOWN)
+                    cpPlayMusic(background_sound);
             }
             else
             if (event.type == KEYUP) {
@@ -405,8 +408,6 @@ int main(int argc, char *args[])
                 break;
             }
             }
-
-
             else if(!bricks[n].destroyed &&
                 collide(ball, bricks[n]) == True) {
                 cpPlaySound(hit_brick_sound);
