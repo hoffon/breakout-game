@@ -13,7 +13,7 @@ Sound hit_paddle_sound, hit_brick_sound , metal_sound;
 Sound hit_top_sound, end_sound , win_sound ;
 //Music background_sound ;
 Texture paddle_texture, ball_texture;
-Texture brick_texture, background_texture , brick2_texture;
+Texture brick_texture, background_texture , brick2_texture, allu_texture;
 Font big_font, small_font, life_font ,position_ball_font,position_paddle_font,win_font;
 
 // Structure for storing info for objects, i.e. Paddle, Brick, Ball.
@@ -50,6 +50,7 @@ int game_init()
     ball_texture = cpLoadTexture("ball2.png");
     brick_texture = cpLoadTexture("brick.png");
     brick2_texture = cpLoadTexture("brick2.jpg"); // ลักษณะอิฐ ที่ต้องทำลาย 4 ครั้ง
+    allu_texture = cpLoadTexture("alluminium.jpg") ; // ลักษณะอิฐ ที่ต้อวทำลาย 3 ครั้ง
     background_texture = cpLoadTexture("backgrounded.png");
 
     big_font = cpLoadFont("THSarabun.ttf", 60);
@@ -72,7 +73,8 @@ int game_init()
 int main(int argc, char *args[])
 {
     enum { BALL_VEL_Y = -5, PADDLE_VEL_X = 7 };
-    int running, n_bricks = 64, n_hits = 0, score = 0 , lifepoint = 3, n_hits27 = 0,n_hits28 = 0,n_hits35 = 0,n_hits36 = 0;
+    int running, n_bricks = 64, n_hits = 0, score = 0 , lifepoint = 3, n_hits27 = 0,n_hits28 = 0 ;
+    int n_hits35 = 0,n_hits36 = 0 , n_hits18 = 0 , n_hits21 = 0 , n_hits42 = 0 , n_hits45 = 0;
     char msg[80];
     char life[100] ;
     char position_ball[50] ;
@@ -93,8 +95,8 @@ int main(int argc, char *args[])
         exit(1);
     }
 
-    for (int n = 0, x = 175, y = 80 , num = 0 ; n < n_bricks; n++) { // สร้างแผ่นไม้
-        bricks[n].width = 50; // ความยาวแผ่นไม้
+    for (int n = 0, x = 100, y = 80 , num = 0 ; n < n_bricks; n++) { // สร้างแผ่นไม้
+        bricks[n].width = 70; // ความยาวแผ่นไม้
         bricks[n].height = 18; // ความสูงแผ่นไม้
         bricks[n].x = x; // ตำแหน่งที่สร้างไม้ แกน x แนวนอน
         bricks[n].y = y; // ตำแหน่งที่สร้างไม้ แกน y แนวตั้ง
@@ -103,7 +105,7 @@ int main(int argc, char *args[])
         num++ ; 
         if (num == 8) // สร้างไม้บรรทัดใหม่
         {
-            x = 175 ;
+            x = 100 ;
             y += 30 ;
             num = 0 ;
         }
@@ -135,6 +137,10 @@ int main(int argc, char *args[])
                     cpDrawTexture(255, 255, 255,
                     bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
                     brick2_texture);
+                else if (n == 18 || n == 21 || n == 42 || n == 45)
+                    cpDrawTexture(255, 255, 255,
+                    bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
+                    allu_texture);
                 else cpDrawTexture(255, 255, 255,
                     bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
                     brick_texture);
@@ -275,6 +281,62 @@ int main(int argc, char *args[])
                     bricks[n].destroyed = True; //ทำลายอิฐ
                     n_hits++; //จำนวนทีอิฐ่ทำลาย
                     score += 40; //คะแนนเพิ่ม
+                }
+                break;
+            }
+            }
+            else if (n == 18 ){ // อิฐก้อนที่ 18 ต้อง ทำลาย 3 ครั้ง ถึงจะได้แต้ม 30 
+            if (!bricks[n].destroyed &&
+                collide(ball, bricks[n]) == True) {
+                cpPlaySound(metal_sound);
+                ball.vel_y = -ball.vel_y;
+                n_hits18++ ;
+                if (n_hits18 == 3){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 30; //คะแนนเพิ่ม
+                }
+                break;
+            }
+            }
+            else if (n == 21 ){ // อิฐก้อนที่ 21 ต้อง ทำลาย 3 ครั้ง ถึงจะได้แต้ม 30 
+            if (!bricks[n].destroyed &&
+                collide(ball, bricks[n]) == True) {
+                cpPlaySound(metal_sound);
+                ball.vel_y = -ball.vel_y;
+                n_hits21++ ;
+                if (n_hits21 == 3){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 30; //คะแนนเพิ่ม
+                }
+                break;
+            }
+            }
+            else if (n == 42 ){ // อิฐก้อนที่ 42 ต้อง ทำลาย 3 ครั้ง ถึงจะได้แต้ม 30 
+            if (!bricks[n].destroyed &&
+                collide(ball, bricks[n]) == True) {
+                cpPlaySound(metal_sound);
+                ball.vel_y = -ball.vel_y;
+                n_hits42++ ;
+                if (n_hits42 == 3){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 30; //คะแนนเพิ่ม
+                }
+                break;
+            }
+            }
+            else if (n == 45 ){ // อิฐก้อนที่ 45 ต้อง ทำลาย 3 ครั้ง ถึงจะได้แต้ม 30 
+            if (!bricks[n].destroyed &&
+                collide(ball, bricks[n]) == True) {
+                cpPlaySound(metal_sound);
+                ball.vel_y = -ball.vel_y;
+                n_hits45++ ;
+                if (n_hits45 == 3){
+                    bricks[n].destroyed = True; //ทำลายอิฐ
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 30; //คะแนนเพิ่ม
                 }
                 break;
             }
