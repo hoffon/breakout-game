@@ -169,7 +169,7 @@ int main(int argc, char *args[])
             ball.vel_y = 5 ; // บอลเคลื่อนที่ตามแกน y (เคลื่อนที่ลง) เป็น 0
             paddle.x = WindowWidth/2-62 ; // ไม้กลับมายังจุดเริ่มต้น
             paddle.y = WindowHeight-50 ; // ไม้กลับมายังจุดเริ่มต้น
-            if (life_bomb != 0){
+            if (life_bomb != 0 && bomb.y == WindowHeight-80){
             bomb.x = WindowWidth/2-12 ; // ระเบิดกลับมายังจุดเริ่มต้น
             bomb.y = WindowHeight-80 ;} //  ระเบิดกลับมายังจุดเริ่มต้น
             
