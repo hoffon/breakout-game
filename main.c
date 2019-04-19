@@ -14,7 +14,7 @@ Sound hit_top_sound, end_sound , win_sound ,red_sound ;
 Music background_sound ;
 Texture paddle_texture, ball_texture;
 Texture brick_texture, background_texture , brick2_texture, allu_texture ,brick3_texture,bomb_texture;
-Font big_font, small_font, life_font ,position_ball_font,position_paddle_font,win_font;
+Font big_font, small_font, life_font ,position_ball_font,position_paddle_font,win_font , bomb_font;
 
 // Structure for storing info for objects, i.e. Paddle, Brick, Ball.
 typedef struct
@@ -63,6 +63,7 @@ int game_init()
     position_ball_font = cpLoadFont("THSarabun.ttf", 20);
     position_paddle_font = cpLoadFont("THSarabun.ttf", 20);
     win_font = cpLoadFont("THSarabun.ttf", 60) ;
+    bomb_font = cpLoadFont("THSarabun.ttf", 60) ;
 
     if (hit_paddle_sound == NULL || hit_brick_sound == NULL ||
         hit_top_sound == NULL || end_sound == NULL ||
@@ -86,6 +87,7 @@ int main(int argc, char *args[])
     char position_ball[50] ;
     char position_paddle[50] ;
     char win[50] ;
+    char bomb_[50] ;
     Object bricks[n_bricks];
     Object ball = {WindowWidth/2-12, 350, 24, 24, 0, BALL_VEL_Y, False};
     Object bomb = {WindowWidth/2-12, WindowHeight-80, 20, 30, 0, 0, False}; //ระเบิด
@@ -138,6 +140,8 @@ int main(int argc, char *args[])
         cpDrawText(255, 255, 255, 750, 20, position_ball, position_ball_font, 1); // แสดงตำแหน่งของลูกบอล
         sprintf(position_paddle, "Position_paddle x = %.3f, y = %.3f", paddle.x, paddle.y);
         cpDrawText(255, 255, 255, 750, 40, position_paddle, position_paddle_font, 1); // แสดงตำแหน่งของไม้
+        sprintf(bomb_, "Bomb x %d", life_bomb);
+        cpDrawText(255, 255, 255, 750, 600, bomb_, bomb_font, 1); // แสดงจำนวนของระเบิดที่ยังใช้ได้
         
         for (int n = 0; n < n_bricks; n++) {
             if (!bricks[n].destroyed)
@@ -263,7 +267,6 @@ int main(int argc, char *args[])
         {
             cpPlaySound(end_sound); //เสียงเมื่อระเบิดชนกับอิฐ
             bomb.destroyed = True ;// ทำลายระเบิด
-            life_bomb-- ;
             if (life_bomb > 0){ //ถ้ายังใช้ระเบิดได้ 
                 bomb.destroyed = False ;
                 bomb.x = paddle.width/2 + paddle.x -10 ; // ระเบิดกลับมายังจุดเริ่มต้น
