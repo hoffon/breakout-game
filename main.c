@@ -80,7 +80,7 @@ int main(int argc, char *args[])
     enum { BALL_VEL_Y = -5, PADDLE_VEL_X = 7 };
     int running, n_bricks = 64, n_hits = 0, score = 0 , lifepoint = 3, n_hits27 = 0,n_hits28 = 0 ;
     int n_hits35 = 0,n_hits36 = 0 , n_hits18 = 0 , n_hits21 = 0 , n_hits42 = 0 , n_hits45 = 0;
-    int n_hits9 = 0,n_hits14 = 0,n_hits49 = 0,n_hits54 = 0 ,b = 0,life_bomb = 1;
+    int n_hits9 = 0,n_hits14 = 0,n_hits49 = 0,n_hits54 = 0 ,b = 0,life_bomb = 5;
     char msg[80];
     char life[100] ;
     char position_ball[50] ;
@@ -169,7 +169,7 @@ int main(int argc, char *args[])
             ball.vel_y = 5 ; // บอลเคลื่อนที่ตามแกน y (เคลื่อนที่ลง) เป็น 0
             paddle.x = WindowWidth/2-62 ; // ไม้กลับมายังจุดเริ่มต้น
             paddle.y = WindowHeight-50 ; // ไม้กลับมายังจุดเริ่มต้น
-            if (life_bomb == 1){
+            if (life_bomb != 0){
             bomb.x = WindowWidth/2-12 ; // ระเบิดกลับมายังจุดเริ่มต้น
             bomb.y = WindowHeight-80 ;} //  ระเบิดกลับมายังจุดเริ่มต้น
             
@@ -262,32 +262,35 @@ int main(int argc, char *args[])
         for (int n = 0; n < n_bricks; n++) {
             if (!bricks[n].destroyed &&
                 collide(bomb, bricks[n]) == True && !bomb.destroyed){
+                    cpPlaySound(end_sound); //เสียงเมื่อระเบิดชนกับอิฐ
                     bricks[n].destroyed = True; //ทำลายอิฐ
                     bomb.destroyed = True ;// ทำลายระเบิด
-                    cpPlaySound(end_sound);
                     bomb.y = -1000 ;
                     life_bomb-- ;
-                    if (n == 27 || n == 28 || n == 35 || n == 36)
-                    {
-                    n_hits++; //จำนวนทีอิฐ่ทำลาย
-                    score += 40; //คะแนนเพิ่ม
+                    if (life_bomb != 0){
+                        bomb.destroyed = False ;
+                        bomb.x = paddle.width/2 + paddle.x -10 ; // ระเบิดกลับมายังจุดเริ่มต้น
+                        bomb.y = WindowHeight-80 ;
+                        bomb.vel_y = 0 ;
+                        b = 0 ;
                     }
-                    else if (n == 18 || n == 21 || n == 42 || n == 45)
-                    {
+                    if (n == 27 || n == 28 || n == 35 || n == 36){
                     n_hits++; //จำนวนทีอิฐ่ทำลาย
-                    score += 30; //คะแนนเพิ่ม
-                    }
-                    else if (n == 9 || n == 14 || n == 49 || n == 54)
-                    {
+                    score += 40;} //คะแนนเพิ่ม
+                    
+                    else if (n == 18 || n == 21 || n == 42 || n == 45){
                     n_hits++; //จำนวนทีอิฐ่ทำลาย
-                    score += 20; //คะแนนเพิ่ม
-                    }
-                    else
-                    {
+                    score += 30; }//คะแนนเพิ่ม
+                    
+                    else if (n == 9 || n == 14 || n == 49 || n == 54){
                     n_hits++; //จำนวนทีอิฐ่ทำลาย
-                    score += 10; //คะแนนเพิ่ม
-                    }
+                    score += 20;} //คะแนนเพิ่ม
+                    
+                    else{
+                    n_hits++; //จำนวนทีอิฐ่ทำลาย
+                    score += 10;} //คะแนนเพิ่ม
                 }
+        
 
 
             if (n == 27 ){ // อิฐก้อนที่ 27 ต้อง ทำลาย 4 ครั้ง ถึงจะได้แต้ม 40 
