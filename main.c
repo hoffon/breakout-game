@@ -63,7 +63,7 @@ int game_init()
     position_ball_font = cpLoadFont("THSarabun.ttf", 20);
     position_paddle_font = cpLoadFont("THSarabun.ttf", 20);
     win_font = cpLoadFont("THSarabun.ttf", 60) ;
-    bomb_font = cpLoadFont("THSarabun.ttf", 60) ;
+    bomb_font = cpLoadFont("THSarabun.ttf", 30) ;
 
     if (hit_paddle_sound == NULL || hit_brick_sound == NULL ||
         hit_top_sound == NULL || end_sound == NULL ||
@@ -132,6 +132,8 @@ int main(int argc, char *args[])
             ball.x, ball.y, ball.width, ball.height, ball_texture);
         cpDrawTexture(255, 255, 255,
             bomb.x, bomb.y, bomb.width, bomb.height, bomb_texture);
+        cpDrawTexture(255, 255, 255,
+            150, 40, bomb.width, bomb.height, bomb_texture);
         sprintf(msg, "คะแนน %d", score);
         cpDrawText(255, 255, 255, 3, 3, msg, small_font, 0);
         sprintf(life, "ชีวิตที่เหลือ : %d",lifepoint); // แสดงคำว่า ชีวิตที่เหลือ : 3 บนหน้าต่างเกมของเรา
@@ -140,8 +142,8 @@ int main(int argc, char *args[])
         cpDrawText(255, 255, 255, 750, 20, position_ball, position_ball_font, 1); // แสดงตำแหน่งของลูกบอล
         sprintf(position_paddle, "Position_paddle x = %.3f, y = %.3f", paddle.x, paddle.y);
         cpDrawText(255, 255, 255, 750, 40, position_paddle, position_paddle_font, 1); // แสดงตำแหน่งของไม้
-        sprintf(bomb_, "Bomb x %d", life_bomb);
-        cpDrawText(255, 255, 255, 750, 600, bomb_, bomb_font, 1); // แสดงจำนวนของระเบิดที่ยังใช้ได้
+        sprintf(bomb_, "x %d", life_bomb);
+        cpDrawText(255, 255, 255, 180, 40, bomb_, bomb_font, 0); // แสดงจำนวนของระเบิดที่ยังใช้ได้
         
         for (int n = 0; n < n_bricks; n++) {
             if (!bricks[n].destroyed)
