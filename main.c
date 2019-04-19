@@ -169,7 +169,7 @@ int main(int argc, char *args[])
             ball.vel_y = 5 ; // บอลเคลื่อนที่ตามแกน y (เคลื่อนที่ลง) เป็น 0
             paddle.x = WindowWidth/2-62 ; // ไม้กลับมายังจุดเริ่มต้น
             paddle.y = WindowHeight-50 ; // ไม้กลับมายังจุดเริ่มต้น
-            if (life_bomb != 0 && bomb.y == WindowHeight-80){
+            if (life_bomb > 0 && bomb.y == WindowHeight-80){ //ถ้ายังใช้ระเบิดได้และ ยังมีชีวิตเหลือ
             bomb.x = WindowWidth/2-12 ; // ระเบิดกลับมายังจุดเริ่มต้น
             bomb.y = WindowHeight-80 ;} //  ระเบิดกลับมายังจุดเริ่มต้น
             
@@ -259,6 +259,23 @@ int main(int argc, char *args[])
         if (ball.x < 0 || ball.x + ball.width > WindowWidth) // เมื่อบอลกระทบกับหน้าต่างเกมซ้ายและขวาจะเด้งกลับไม่เลยจอออกไป
             ball.vel_x = -ball.vel_x;
 
+        if (bomb.y < 0 ) //  ถ้าบอลกระทบจุดสูงสุดของหน้าต่างเกม
+        {
+            cpPlaySound(end_sound); //เสียงเมื่อระเบิดชนกับอิฐ
+            bomb.destroyed = True ;// ทำลายระเบิด
+            life_bomb-- ;
+            if (life_bomb > 0){ //ถ้ายังใช้ระเบิดได้ 
+                bomb.destroyed = False ;
+                bomb.x = paddle.width/2 + paddle.x -10 ; // ระเบิดกลับมายังจุดเริ่มต้น
+                bomb.y = WindowHeight-80 ;
+                bomb.vel_y = 0 ;
+                b = 0 ;
+            }
+        }
+
+        if (life_bomb  < 1) // เมื่อใช้ระเบิดหมดแล้วระเบิดจะหายไปจากเกม
+        bomb.y = 1000 ;
+
         if (ball.y < 0) { //ถ้าบอลกระทบจุดสูงสุดของหน้าต่างเกม
             cpPlaySound(hit_top_sound);
             ball.vel_y = -ball.vel_y; //บอลเด้งกลับลงมา ไม่งั้นจะค้างข้างบน
@@ -272,7 +289,7 @@ int main(int argc, char *args[])
                     bomb.destroyed = True ;// ทำลายระเบิด
                     bomb.y = -1000 ;
                     life_bomb-- ;
-                    if (life_bomb != 0){
+                    if (life_bomb > 0){ //ถ้ายังใช้ระเบิดได้
                         bomb.destroyed = False ;
                         bomb.x = paddle.width/2 + paddle.x -10 ; // ระเบิดกลับมายังจุดเริ่มต้น
                         bomb.y = WindowHeight-80 ;
