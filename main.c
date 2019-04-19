@@ -245,9 +245,13 @@ int main(int argc, char *args[])
 
         if (paddle.x < 0){ // ไม้จะติดขอบด้านซ้าย 
             paddle.x = 0;
-            bomb.x = paddle.width/2 + paddle.x -10 ;}
-        if (paddle.x + paddle.width > WindowWidth) // ไม้จะติดขอบด้านขวา
+            if (b == 0)
+                bomb.x = paddle.width/2 + paddle.x -10 ;
+        }
+        if (paddle.x + paddle.width > WindowWidth){ // ไม้จะติดขอบด้านขวา
             paddle.x = WindowWidth - paddle.width;
+            if (b == 0)
+            bomb.x =paddle.width/2 + paddle.x -10 ;}
 
         ball.x += ball.vel_x;//ต่ำแหน่งของบอลที่จะเคลื่อนที่ แกน x แนวนอน  
         ball.y += ball.vel_y;//ต่ำแหน่งของบอลที่จะเคลื่อนที่ แกน y แนวตั้ง
