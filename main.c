@@ -243,8 +243,9 @@ int main(int argc, char *args[])
         bomb.x += paddle.vel_x ;  //ต่ำแหน่งของระเบิดที่จะเคลื่อนที่ 
         
 
-        if (paddle.x < 0) // ไม้จะติดขอบด้านซ้าย 
+        if (paddle.x < 0){ // ไม้จะติดขอบด้านซ้าย 
             paddle.x = 0;
+            bomb.x = paddle.width/2 + paddle.x -10 ;}
         if (paddle.x + paddle.width > WindowWidth) // ไม้จะติดขอบด้านขวา
             paddle.x = WindowWidth - paddle.width;
 
