@@ -10,7 +10,7 @@
 #define WindowHeight 650 //ขนาดหน้าจอ สูง
 
 Sound hit_paddle_sound, hit_brick_sound , metal_sound ,allu_sound;
-Sound hit_top_sound, end_sound , win_sound ,red_sound ;
+Sound hit_top_sound, end_sound , win_sound ,red_sound ,gold_sound;
 Music background_sound ;
 Texture paddle_texture, ball_texture , ball2_texture;
 Texture brick_texture, background_texture , brick2_texture, allu_texture ,brick3_texture,bomb_texture,brickball_texture;
@@ -47,6 +47,7 @@ int game_init()
     allu_sound = cpLoadSound("allu_sound.wav") ;
     red_sound = cpLoadSound("red.wav");
     background_sound = cpLoadMusic("background_sound.mp3");
+    gold_sound = cpLoadSound("20brick.wav") ;
 
     paddle_texture = cpLoadTexture("paddle.png");
     ball_texture = cpLoadTexture("ball2.png");
@@ -495,6 +496,7 @@ int main(int argc, char *args[])
                     score += 20;} //คะแนนเพิ่ม
                     
                     else if (n == 20){
+                        cpPlaySound(gold_sound);
                         n_hits++ ;
                         score += 10 ;
                         j++;}
@@ -2837,7 +2839,7 @@ int main(int argc, char *args[])
             else if (n == 20 ){ 
             if (!bricks[n].destroyed &&
                 collide(ball, bricks[n]) == True ) {
-                cpPlaySound(red_sound);
+                cpPlaySound(gold_sound);
                 ball.vel_y = -ball.vel_y;
                 bricks[n].destroyed = True; //ทำลายอิฐ
                 n_hits++; //จำนวนทีอิฐ่ทำลาย
