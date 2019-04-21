@@ -494,6 +494,10 @@ int main(int argc, char *args[])
                     n_hits++; //จำนวนทีอิฐ่ทำลาย
                     score += 20;} //คะแนนเพิ่ม
                     
+                    else if (n == 20){
+                        n_hits++ ;
+                        score += 10 ;
+                        j++;}
                     else{
                     n_hits++; //จำนวนทีอิฐ่ทำลาย
                     score += 10;} //คะแนนเพิ่ม
