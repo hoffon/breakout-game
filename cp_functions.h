@@ -22,6 +22,10 @@
 #define K_DOWN    SDLK_DOWN
 #define K_UP      SDLK_UP
 #define K_M       SDLK_m
+#define K_N       SDLK_n
+#define K_B       SDLK_b
+
+
 
 
 

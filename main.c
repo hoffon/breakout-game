@@ -166,19 +166,6 @@ int main(int argc, char *args[])
         
         if (j > 0 ){
         ball1.destroyed = False ;
-        /*ball2.x -= 60 ;
-        ball3.x -= 50 ;
-        ball4.x -= 40 ;
-        ball5.x -= 30 ;
-        ball6.x -= 20 ;
-        ball7.x -= 10 ;
-        ball9.x += 10 ;
-        ball10.x += 20 ;
-        ball11.x += 30 ;
-        ball12.x += 40 ;
-        ball13.x += 50 ;
-        ball14.x += 60 ;
-        ball15.x += 70 ;*/
         cpDrawTexture(255, 255, 255,
                 ball1.x, ball1.y, ball1.width, ball1.height, ball2_texture);
         cpDrawTexture(255, 255, 255,
@@ -512,7 +499,21 @@ int main(int argc, char *args[])
                         cpPlaySound(gold_sound);
                         n_hits++ ;
                         score += 10 ;
-                        j++;}
+                        j++;
+                        ball1.x -= 150 ;
+                    ball2.x -= 130 ;
+                    ball3.x -= 110 ;
+                    ball4.x -= 90 ;
+                    ball5.x -= 70 ;
+                    ball6.x -= 50 ;
+                    ball7.x -= 30 ;
+                    ball9.x += 30 ;
+                    ball10.x += 50 ;
+                    ball11.x += 70 ;
+                    ball12.x += 90 ;
+                    ball13.x += 110 ;
+                    ball14.x += 130 ;
+                    ball15.x += 150 ;}
                     else{
                     n_hits++; //จำนวนทีอิฐ่ทำลาย
                     score += 10;} //คะแนนเพิ่ม
@@ -2851,7 +2852,7 @@ int main(int argc, char *args[])
             
             else if (n == 20 ){ 
             if (!bricks[n].destroyed &&
-                collide(ball, bricks[n]) == True ) {
+                collide(ball, bricks[n]) == True  ) {
                 cpPlaySound(gold_sound);
                 ball.vel_y = -ball.vel_y;
                 bricks[n].destroyed = True; //ทำลายอิฐ
