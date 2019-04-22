@@ -14,11 +14,15 @@
 #define QUIT      SDL_QUIT
 #define KEYUP     SDL_KEYUP
 #define KEYDOWN   SDL_KEYDOWN
+
+
 #define K_ESCAPE  SDLK_ESCAPE
 #define K_LEFT    SDLK_LEFT
 #define K_RIGHT   SDLK_RIGHT
 #define K_DOWN    SDLK_DOWN
 #define K_UP      SDLK_UP
+#define K_M       SDLK_m
+
 
 
 typedef TTF_Font  *Font;

@@ -283,7 +283,7 @@ int main(int argc, char *args[])
                     paddle.vel_x = abs(PADDLE_VEL_X); //ไม้เคลื่อนที่ไปทางขวา
                     bomb.vel_x = abs(PADDLE_VEL_X);
                 } 
-                if (event.key.keysym.sym == K_DOWN) // รับแป้นลงจาก keyboard
+                if (event.key.keysym.sym == K_M) // รับแป้นลงจาก keyboard
                     cpPlayMusic(background_sound); // เปิดเพลงขณะเล่น
                 if (event.key.keysym.sym == K_UP){
                     b++;
