@@ -156,7 +156,7 @@ int main(int argc, char *args[])
         cpDrawText(255, 255, 255, 3, 3, msg, small_font, 0);
         sprintf(life, "ชีวิตที่เหลือ : %d",lifepoint); // แสดงคำว่า ชีวิตที่เหลือ : 3 บนหน้าต่างเกมของเรา
         cpDrawText(255, 255, 255, 3, 40, life,life_font, 0);
-        sprintf(position_ball, "Position_ball x = %.3f, y = %.3f", ball.x, ball1.y);
+        sprintf(position_ball, "Position_ball x = %.3f, y = %.3f", ball.x, ball.y);
         cpDrawText(255, 255, 255, 750, 20, position_ball, position_ball_font, 1); // แสดงตำแหน่งของลูกบอล
         sprintf(position_paddle, "Position_paddle x = %.3f, y = %.3f", paddle.x, paddle.y);
         cpDrawText(255, 255, 255, 750, 40, position_paddle, position_paddle_font, 1); // แสดงตำแหน่งของไม้
@@ -166,6 +166,19 @@ int main(int argc, char *args[])
         
         if (j > 0 ){
         ball1.destroyed = False ;
+        /*ball2.x -= 60 ;
+        ball3.x -= 50 ;
+        ball4.x -= 40 ;
+        ball5.x -= 30 ;
+        ball6.x -= 20 ;
+        ball7.x -= 10 ;
+        ball9.x += 10 ;
+        ball10.x += 20 ;
+        ball11.x += 30 ;
+        ball12.x += 40 ;
+        ball13.x += 50 ;
+        ball14.x += 60 ;
+        ball15.x += 70 ;*/
         cpDrawTexture(255, 255, 255,
                 ball1.x, ball1.y, ball1.width, ball1.height, ball2_texture);
         cpDrawTexture(255, 255, 255,
@@ -2845,6 +2858,20 @@ int main(int argc, char *args[])
                 n_hits++; //จำนวนทีอิฐ่ทำลาย
                 score += 10; //คะแนนเพิ่ม
                 j = 1 ;
+                ball1.x -= 150 ;
+                ball2.x -= 130 ;
+                ball3.x -= 110 ;
+                ball4.x -= 90 ;
+                ball5.x -= 70 ;
+                ball6.x -= 50 ;
+                ball7.x -= 30 ;
+                ball9.x += 30 ;
+                ball10.x += 50 ;
+                ball11.x += 70 ;
+                ball12.x += 90 ;
+                ball13.x += 110 ;
+                ball14.x += 130 ;
+                ball15.x += 150 ;
                 break;
             }
             }
