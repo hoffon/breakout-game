@@ -9,12 +9,12 @@
 #define WindowWidth  910 //ขนาดหน้าจอ กว้าง
 #define WindowHeight 650 //ขนาดหน้าจอ สูง
 
-Sound hit_paddle_sound, hit_brick_sound , metal_sound ,allu_sound;
-Sound hit_top_sound, end_sound , win_sound ,red_sound ,gold_sound;
-Music background_sound ;
-Texture paddle_texture, ball_texture , ball2_texture;
+Sound hit_paddle_sound, hit_brick_sound , metal_sound ,allu_sound;//เสียงที่ใช้ในเกม
+Sound hit_top_sound, end_sound , win_sound ,red_sound ,gold_sound;//เสียงที่ใช้ในเกม
+Music background_sound ;//เพลงใช้ในเกม
+Texture paddle_texture, ball_texture , ball2_texture; // วัตถุในเกม เช่น อิฐ ไม้ บอล
 Texture brick_texture, background_texture , brick2_texture, allu_texture ,brick3_texture,bomb_texture,brickball_texture;
-Font big_font, small_font, life_font ,position_ball_font,position_paddle_font,win_font , bomb_font;
+Font big_font, small_font, life_font ,position_ball_font,position_paddle_font,win_font , bomb_font;// ตัวอักษรต่างๆในเกม
 
 // Structure for storing info for objects, i.e. Paddle, Brick, Ball.
 typedef struct
@@ -38,35 +38,35 @@ int collide(Object a, Object b)
 // Initial routine to load sounds, textures, and fonts.
 int game_init()
 {
-    hit_paddle_sound = cpLoadSound("hitDown.wav");
-    hit_brick_sound = cpLoadSound("hitUp.wav");
-    hit_top_sound = cpLoadSound("hitTop.wav");
-    end_sound = cpLoadSound("theEnd.wav");
-    win_sound = cpLoadSound("win.wav") ;
-    metal_sound = cpLoadSound("metal_sound.wav") ;
-    allu_sound = cpLoadSound("allu_sound.wav") ;
-    red_sound = cpLoadSound("red.wav");
-    background_sound = cpLoadMusic("background_sound.mp3");
-    gold_sound = cpLoadSound("20brick.wav") ;
+    hit_paddle_sound = cpLoadSound("hitDown.wav"); // เสียงเมื่อบอลโดนไม้
+    hit_brick_sound = cpLoadSound("hitUp.wav"); // เสียงเมื่อบอลโดนอิฐทั่วไป
+    hit_top_sound = cpLoadSound("hitTop.wav"); // เสียงเมื่อบอลโดนขอบบนสุดของเกม
+    end_sound = cpLoadSound("theEnd.wav"); // เสียงเมื่อแพ้เกม
+    win_sound = cpLoadSound("win.wav") ; // เสียงเมื่อชนะเกม
+    metal_sound = cpLoadSound("metal_sound.wav") ; // เสียงเมื่อบอลโดนอิฐที่ต้องทำลาย 4 ครั้ง
+    allu_sound = cpLoadSound("allu_sound.wav") ;// เสียงเมื่อบอลโดนอิฐที่ต้องทำลาย 3 ครั้ง
+    red_sound = cpLoadSound("red.wav"); // เสียงเมื่อบอลโดนอิฐที่ต้องทำลาย 2 ครั้ง
+    background_sound = cpLoadMusic("background_sound.mp3");// เสียงเพลงจะเล่นเมื่อกด m
+    gold_sound = cpLoadSound("20brick.wav") ;// เสียงเมื่อบอลโดนอิฐสีทองจะทำให้มีลูกบอลกระจายออกมา 15 ลูก
 
-    paddle_texture = cpLoadTexture("paddle.png");
-    ball_texture = cpLoadTexture("ball2.png");
-    brick_texture = cpLoadTexture("brick.png");
+    paddle_texture = cpLoadTexture("paddle.png"); // วัตถุไม้
+    ball_texture = cpLoadTexture("ball2.png");// วัตถุบอลเริ่มต้น
+    brick_texture = cpLoadTexture("brick.png");// วัตถุอิฐทั่วไป
     brick2_texture = cpLoadTexture("brick2.jpg"); // ลักษณะอิฐ ที่ต้องทำลาย 4 ครั้ง
-    allu_texture = cpLoadTexture("alluminium.jpg") ; // ลักษณะอิฐ ที่ต้อวทำลาย 3 ครั้ง
-    background_texture = cpLoadTexture("backgrounded.png");
-    brick3_texture = cpLoadTexture("brick3.jpg");
-    bomb_texture = cpLoadTexture("bomb.jpg") ;
-    brickball_texture = cpLoadTexture("brickball.jpeg") ; 
-    ball2_texture = cpLoadTexture("ball.png") ;
+    allu_texture = cpLoadTexture("alluminium.jpg") ; // ลักษณะอิฐ ที่ต้องทำลาย 3 ครั้ง
+    background_texture = cpLoadTexture("backgrounded.png");// ภาพพื้นหลังของเกม
+    brick3_texture = cpLoadTexture("brick3.jpg"); // ลักษณะอิฐ ที่ต้องทำลาย 2 ครั้ง
+    bomb_texture = cpLoadTexture("bomb.jpg") ; //วัตถุระเบิด
+    brickball_texture = cpLoadTexture("brickball.jpeg") ; // ลักษณะอิฐเมื่อบอลโดนอิฐจะกระจายบอลออกมา 15 ลูก
+    ball2_texture = cpLoadTexture("ball.png") ; // บอลที่จะกระจายออกมา
 
-    big_font = cpLoadFont("THSarabun.ttf", 60);
-    small_font = cpLoadFont("THSarabun.ttf", 30);
-    life_font = cpLoadFont("THSarabun.ttf",30);
-    position_ball_font = cpLoadFont("THSarabun.ttf", 20);
-    position_paddle_font = cpLoadFont("THSarabun.ttf", 20);
-    win_font = cpLoadFont("THSarabun.ttf", 60) ;
-    bomb_font = cpLoadFont("THSarabun.ttf", 30) ;
+    big_font = cpLoadFont("THSarabun.ttf", 60); // ลักษณะของคำ จบเกมจบกัน
+    small_font = cpLoadFont("THSarabun.ttf", 30);  // ลักษณะของคำ ชีวิตที่เหลือ
+    life_font = cpLoadFont("THSarabun.ttf",30);  // ตัวเลขที่แสดงจำนวนทีชีวิตที่ยังคงเล่นได้
+    position_ball_font = cpLoadFont("THSarabun.ttf", 20); // ลักษณะของคำ position x y ของ บอลหลัก
+    position_paddle_font = cpLoadFont("THSarabun.ttf", 20); // ลักษณะของคำ position paddle
+    win_font = cpLoadFont("THSarabun.ttf", 60) ; // ลักษณะของคำ ยินดีด้วยคุณชนะ
+    bomb_font = cpLoadFont("THSarabun.ttf", 30) ; // ตัวเลขที่แสดงจำนวนระเบิดที่ยังคงใช้ได้
 
     if (hit_paddle_sound == NULL || hit_brick_sound == NULL ||
         hit_top_sound == NULL || end_sound == NULL ||
@@ -92,8 +92,8 @@ int main(int argc, char *args[])
     char win[50] ;
     char bomb_[50] ;
     Object bricks[n_bricks];
-    Object ball = {WindowWidth/2-12, 350, 24, 24, 0, BALL_VEL_Y, False};
-    Object ball1 = {ball.x, 145, 24, 24, 0, 5, True};
+    Object ball = {WindowWidth/2-12, 350, 24, 24, 0, BALL_VEL_Y, False}; // ลูกบอลเริ่มต้น
+    Object ball1 = {ball.x, 145, 24, 24, 0, 5, True}; // ลูกบอล 15 ลูก ที่จะกระจายออกมาเมื่อเรสทำลายอิฐที่ 20 ได้
     Object ball2 = {ball.x, 145, 24, 24, 0, 5, False};
     Object ball3 = {ball.x, 145, 24, 24, 0, 5, False};
     Object ball4 = {ball.x, 145, 24, 24, 0, 5, False};
@@ -109,7 +109,7 @@ int main(int argc, char *args[])
     Object ball14 = {ball.x, 145, 24, 24, 0, 5, False};
     Object ball15 = {ball.x, 145, 24, 24, 0, 5, False};
     Object bomb = {WindowWidth/2-12, WindowHeight-80, 20, 30, 0, 0, False}; //ระเบิด
-    Object paddle = {WindowWidth/2-62, WindowHeight-50, 124, 18, 0, 0, False};
+    Object paddle = {WindowWidth/2-62, WindowHeight-50, 124, 18, 0, 0, False};// ไม้ตีบอล
     Event event;
 
     if (cpInit(WindowTitle, WindowWidth, WindowHeight) == False) {
@@ -143,20 +143,20 @@ int main(int argc, char *args[])
     while (running) {
         cpClearScreen();
         cpDrawTexture(255, 255, 255,
-            0, 0, WindowWidth, WindowHeight, background_texture);
+            0, 0, WindowWidth, WindowHeight, background_texture); //วาดภาพพื้นหลังของเกม
         cpDrawTexture(255, 255, 255,
-            paddle.x, paddle.y, paddle.width, paddle.height, paddle_texture);
+            paddle.x, paddle.y, paddle.width, paddle.height, paddle_texture);//วาดภาพไม้ตีอิฐ
         cpDrawTexture(255, 255, 255,
-            ball.x, ball.y, ball.width, ball.height, ball_texture);
+            ball.x, ball.y, ball.width, ball.height, ball_texture);//วาดลูกบอลเริ่มต้น
         cpDrawTexture(255, 255, 255,
-            bomb.x, bomb.y, bomb.width, bomb.height, bomb_texture);
+            bomb.x, bomb.y, bomb.width, bomb.height, bomb_texture);//วาดระเบิด
         cpDrawTexture(255, 255, 255,
-            150, 40, bomb.width, bomb.height, bomb_texture);
+            150, 40, bomb.width, bomb.height, bomb_texture);//วาดภาพระเบิดที่ใช้แสดงจำนวนระเบิดที่ใช้ได้
         sprintf(msg, "คะแนน %d", score);
         cpDrawText(255, 255, 255, 3, 3, msg, small_font, 0);
         sprintf(life, "ชีวิตที่เหลือ : %d",lifepoint); // แสดงคำว่า ชีวิตที่เหลือ : 3 บนหน้าต่างเกมของเรา
         cpDrawText(255, 255, 255, 3, 40, life,life_font, 0);
-        sprintf(position_ball, "Position_ball x = %.3f, y = %.3f", ball.x, ball.y);
+        sprintf(position_ball, "Position_ball x = %.3f, y = %.3f", ball.x, ball.y);// แสดงคำว่า position x y 
         cpDrawText(255, 255, 255, 750, 20, position_ball, position_ball_font, 1); // แสดงตำแหน่งของลูกบอล
         sprintf(position_paddle, "Position_paddle x = %.3f, y = %.3f", paddle.x, paddle.y);
         cpDrawText(255, 255, 255, 750, 40, position_paddle, position_paddle_font, 1); // แสดงตำแหน่งของไม้
@@ -164,7 +164,7 @@ int main(int argc, char *args[])
         cpDrawText(255, 255, 255, 180, 40, bomb_, bomb_font, 0); // แสดงจำนวนของระเบิดที่ยังใช้ได้
         
         
-        if (j > 0 ){
+        if (j > 0 ){  // เมื่อ ทำลายอิฐสีทอง(อิฐที่ 20 )จะทำการวาดลูกบอลทั้ง 15ออกมา 
         ball1.destroyed = False ;
         cpDrawTexture(255, 255, 255,
                 ball1.x, ball1.y, ball1.width, ball1.height, ball2_texture);
@@ -204,19 +204,19 @@ int main(int argc, char *args[])
                     cpDrawTexture(255, 255, 255,
                     bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
                     brick2_texture);
-                else if (n == 20)
+                else if (n == 20) // สร้างลักษณะอิฐสีทองเมื่อชนจะกระจายบอลออกมา 15 ลูก
                     cpDrawTexture(255, 255, 255,
                     bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
                     brickball_texture);
-                else if (n == 18 || n == 21 || n == 42 || n == 45)
+                else if (n == 18 || n == 21 || n == 42 || n == 45) // สร้างลักษณะอิฐใหม่ให้มีการชน 3 ครั้งถึงจะถูกทำลาย 
                     cpDrawTexture(255, 255, 255,
                     bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
                     allu_texture);
-                else if (n == 9 || n == 14 || n == 49 || n == 54)
+                else if (n == 9 || n == 14 || n == 49 || n == 54) // สร้างลักษณะอิฐใหม่ให้มีการชน 2 ครั้งถึงจะถูกทำลาย 
                     cpDrawTexture(255, 255, 255,
                     bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
                     brick3_texture);
-                else cpDrawTexture(255, 255, 255,
+                else cpDrawTexture(255, 255, 255, // สร้างลักษณะอิฐให้มีการชน 1 ครั้งถึงจะถูกทำลาย 
                     bricks[n].x, bricks[n].y, bricks[n].width, bricks[n].height,
                     brick_texture);
             }
@@ -236,31 +236,30 @@ int main(int argc, char *args[])
             bomb.y = WindowHeight-80 ;} //  ระเบิดกลับมายังจุดเริ่มต้น
             
         }
-        if (n_hits == n_bricks) // เมื่อลเล่นเกมแล้วพังแผ่นไม้ได้หมด จะแสดงคำว่า ยินดีด้วยคุณชนะ
+        if (n_hits == n_bricks) // เมื่อเล่นเกมแล้วพังแผ่นไม้ได้หมด จะแสดงคำว่า ยินดีด้วยคุณชนะ
         {
-            cpPlaySound(win_sound) ;
-            cpDrawText(255, 255, 0, 450, 350, "ยินดีด้วยคุณชนะ", win_font, 1);
+            cpPlaySound(win_sound) ; //เล่นเสียง เมื่อชนะ
+            cpDrawText(255, 255, 0, 450, 350, "ยินดีด้วยคุณชนะ", win_font, 1); // แสดงคำ ยินดีด้วยคุณชนะ เมื่อทำลายอิฐได้หมด
             cpSwapBuffers();
             while (1) {
                 cbEventListener(&event);
                 if (event.type == QUIT ||
-                    event.type == KEYUP && event.key.keysym.sym == K_ESCAPE) {
+                    event.type == KEYUP && event.key.keysym.sym == K_ESCAPE) { //เมื่อกดปุ่ม esc  จะปิดหน้าต่างเกม
                     running = False;
                     break;
                 }
             }
-            //break ;
-            //running = False ;
+
         }
         
         if (lifepoint < 0 ) {
-            cpPlaySound(end_sound);
-            cpDrawText(255, 255, 0, 450, 350, "จบเกมจบกัน", big_font, 1);
+            cpPlaySound(end_sound);//เล่นเสียง เมื่อชีวิตในการเล่นหมด
+            cpDrawText(255, 255, 0, 450, 350, "จบเกมจบกัน", big_font, 1);// แสดงคำ ยินดีด้วยคุณชนะ เมื่อชีวิตในการเล่นหมด
             cpSwapBuffers();
             while (1) {
                 cbEventListener(&event);
                 if (event.type == QUIT ||
-                    event.type == KEYUP && event.key.keysym.sym == K_ESCAPE) {
+                    event.type == KEYUP && event.key.keysym.sym == K_ESCAPE) { //เมื่อกดปุ่ม esc  จะปิดหน้าต่างเกม
                     running = False;
                     break;
                 }
@@ -269,7 +268,7 @@ int main(int argc, char *args[])
         cpSwapBuffers();
         while (cbEventListener(&event)) {
             if (event.type == QUIT ||
-                 event.type == KEYUP && event.key.keysym.sym == K_ESCAPE) {
+                 event.type == KEYUP && event.key.keysym.sym == K_ESCAPE) { //เมื่อกดปุ่ม esc  จะปิดหน้าต่างเกม
                 running = False;
                 break;
             }
@@ -285,13 +284,13 @@ int main(int argc, char *args[])
                 } 
                 if (event.key.keysym.sym == K_M) // รับแป้นลงจาก keyboard
                     cpPlayMusic(background_sound); // เปิดเพลงขณะเล่น
-                if (event.key.keysym.sym == K_UP){
+                if (event.key.keysym.sym == K_UP){ // รับแป้นขึ้นจาก keyboard
                     b++;
-                    bomb.vel_y = BALL_VEL_Y ;
+                    bomb.vel_y = BALL_VEL_Y ; //ทำการปล่อยระเบิดออกไป
                 }
             }
             else
-            if (event.type == KEYUP) {
+            if (event.type == KEYUP) { // หยุดเคลื่อนไหวของไม้
                 if (event.key.keysym.sym == K_LEFT)
                     paddle.vel_x = 0;
                 if (event.key.keysym.sym == K_RIGHT)
@@ -317,7 +316,7 @@ int main(int argc, char *args[])
 
         ball.x += ball.vel_x;//ต่ำแหน่งของบอลที่จะเคลื่อนที่ แกน x แนวนอน  
         ball.y += ball.vel_y;//ต่ำแหน่งของบอลที่จะเคลื่อนที่ แกน y แนวตั้ง
-        if (j > 0){
+        if (j > 0){ // เมื่อ ทำลายอิฐที่20ได้ จะสร้างบอล 15 ลูก และเคลื่อนที่ลง
         ball1.x += ball1.vel_x ;
         ball1.y += ball1.vel_y ;
         ball2.x += ball2.vel_x ;
@@ -408,8 +407,8 @@ int main(int argc, char *args[])
             ball.vel_y = -ball.vel_y; //บอลเด้งกลับลงมา ไม่งั้นจะค้างข้างบน
         }
 
-        if (ball1.y < 0){
-        cpPlaySound(hit_top_sound);
+        if (ball1.y < 0){ // เมื่อบอลกระทบขอบหน้าต่างบนจะเด้งกลับลงมา
+        cpPlaySound(hit_top_sound);  // เล่นเสียงเมื่อโดนขอบหน้าต่างบน
         ball1.vel_y = -ball1.vel_y ;
         }
         if (ball2.y < 0){
@@ -495,8 +494,8 @@ int main(int argc, char *args[])
                     n_hits++; //จำนวนทีอิฐ่ทำลาย
                     score += 20;} //คะแนนเพิ่ม
                     
-                    else if (n == 20){
-                        cpPlaySound(gold_sound);
+                    else if (n == 20){ // เมื่อทำลายอิฐที่ 20 ได้ จะสร้างบอลออกมา 15 ลูก
+                        cpPlaySound(gold_sound); // เล่นเสียงเมื่อทำลายอิฐที่ 20 ได้
                         n_hits++ ;
                         score += 10 ;
                         j++;
@@ -3036,9 +3035,9 @@ int main(int argc, char *args[])
                 }///////////////////////////////////////////////////////////////
         }
 
-        if (collide(ball, paddle) == True  ) 
+        if (collide(ball, paddle) == True  )  // เมื่อบอลโดนแผ่นไม้
         {
-            cpPlaySound(hit_paddle_sound);
+            cpPlaySound(hit_paddle_sound); //เล่นเสียงเมื่อบอลโดนแผ่นไม้
             if (ball.y >= paddle.y || ball.y >= 590)
                 ball.vel_y = ball.vel_y ; //  เมื่อ ball.y อยู่ตำแหน่งเดียวกับ  paddle.y บอลจะไม่ค้างอยู่ที่ไม้ 
             else if (ball.x >= paddle.x + paddle.width / 2 && 
