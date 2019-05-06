@@ -50,11 +50,11 @@ int game_init()
     gold_sound = cpLoadSound("20brick.wav") ;// เสียงเมื่อบอลโดนอิฐสีทองจะทำให้มีลูกบอลกระจายออกมา 15 ลูก
 
     paddle_texture = cpLoadTexture("paddle.png"); // วัตถุไม้
-    ball_texture = cpLoadTexture("ball2.png");// วัตถุบอลเริ่มต้น
+    ball_texture = cpLoadTexture("ball3.png");// วัตถุบอลเริ่มต้น
     brick_texture = cpLoadTexture("brick.png");// วัตถุอิฐทั่วไป
     brick2_texture = cpLoadTexture("brick2.jpg"); // ลักษณะอิฐ ที่ต้องทำลาย 4 ครั้ง
     allu_texture = cpLoadTexture("alluminium.jpg") ; // ลักษณะอิฐ ที่ต้องทำลาย 3 ครั้ง
-    background_texture = cpLoadTexture("backgrounded.png");// ภาพพื้นหลังของเกม
+    background_texture = cpLoadTexture("backgrounded.jpeg");// ภาพพื้นหลังของเกม
     brick3_texture = cpLoadTexture("brick3.jpg"); // ลักษณะอิฐ ที่ต้องทำลาย 2 ครั้ง
     bomb_texture = cpLoadTexture("bomb.jpg") ; //วัตถุระเบิด
     brickball_texture = cpLoadTexture("brickball.jpeg") ; // ลักษณะอิฐเมื่อบอลโดนอิฐจะกระจายบอลออกมา 15 ลูก
